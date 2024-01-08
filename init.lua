@@ -28,8 +28,15 @@ require("lazy").setup({
 	{'L3MON4D3/LuaSnip'},
 	-- auto pairing
 	{'windwp/nvim-autopairs', event = "InsertEnter",},
-
+	-- telescope
+	{'nvim-telescope/telescope.nvim', tag = '0.1.5'},
+	-- dependency for telescope
+	'nvim-lua/plenary.nvim',
 })
+
+require "opey.keymaps"
+require "opey.telescope"
+-- color scheme stuff
 vim.g.gruvbox_baby_function_style = "NONE"
 -- to access pallete
 -- vim.g.gruvbox_baby_highlights = {Normal = {fg = colors.orange}}
@@ -87,3 +94,5 @@ set.softtabstop=4
 set.cc="80"
 set.number=true
 set.relativenumber=true
+set.clipboard=unnamedplus
+set.swapfile=false
