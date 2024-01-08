@@ -34,6 +34,7 @@ require("lazy").setup({
 	'nvim-lua/plenary.nvim',
 })
 
+require "opey.cmp"
 require "opey.keymaps"
 require "opey.telescope"
 -- color scheme stuff
