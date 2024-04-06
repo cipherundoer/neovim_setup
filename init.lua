@@ -17,15 +17,14 @@ require("lazy").setup({
 	-- color scheme
 	{
 		-- Theme inspired by Atom
-		'ellisonleao/gruvbox.nvim',
+		'Mofiqul/vscode.nvim',
 		priority = 1000,
 		lazy = false,
 		config = function()
-			require('gruvbox').setup {
-				-- Set a style preset. 'dark' is default.
-				-- style = 'dark', -- dark, darker, cool, deep, warm, warmer, light
+			require('vscode').setup {
+				transparent = true,
 			}
-			require('gruvbox').load()
+			require('vscode').load()
 		end,
 	},
 	-- toggle commenting with a shortcut
@@ -52,7 +51,7 @@ require("lazy").setup({
 		opts = {
 			options = {
 				icons_enabled = false,
-				theme = 'auto',
+				theme = 'vscode',
 				component_separators = '|',
 				section_separators = '',
 			},
