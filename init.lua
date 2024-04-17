@@ -23,11 +23,8 @@ require("lazy").setup({
 		config = function()
 			require('vscode').setup {
 				transparent = true,
-<<<<<<< HEAD
-=======
 				italic_comments = true,
 				underline_links = true,
->>>>>>> d8dfda3 (synced with latest local on hard drive, and added transparency for nvim-tree)
 			}
 			require('vscode').load()
 		end,
@@ -120,7 +117,7 @@ require("mason").setup({})
 require('mason-lspconfig').setup({
 	-- Replace the language servers listed here
 	-- with the ones you want to install
-	ensure_installed = { 'tsserver', 'rust_analyzer' },
+	ensure_installed = { 'rust_analyzer' },
 	handlers = {
 		lsp_zero.default_setup,
 	}
