@@ -23,6 +23,11 @@ require("lazy").setup({
 		config = function()
 			require('vscode').setup {
 				transparent = true,
+<<<<<<< HEAD
+=======
+				italic_comments = true,
+				underline_links = true,
+>>>>>>> d8dfda3 (synced with latest local on hard drive, and added transparency for nvim-tree)
 			}
 			require('vscode').load()
 		end,
@@ -67,6 +72,7 @@ require("lazy").setup({
 	},
 
 	"williamboman/mason-lspconfig.nvim",
+	"nvim-tree/nvim-tree.lua",
 })
 
 --
@@ -90,9 +96,11 @@ require("Comment").setup()
 -- a bizillion other plugins manually
 local lsp_zero = require('lsp-zero')
 
+
 lsp_zero.on_attach(function(client, bufnr)
 	lsp_zero.default_keymaps({ buffer = bufnr })
 	local opts = { buffer = bufnr }
+
 
 	vim.keymap.set({ 'n', 'x' }, 'pq', function()
 		vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
@@ -119,6 +127,7 @@ require('mason-lspconfig').setup({
 })
 local lspconfig = require('lspconfig')
 
+
 lspconfig.rust_analyzer.setup {
 	on_attach = function(client, bufnr)
 		client.server_capabilities.semanticTokensProvider = nil
@@ -138,6 +147,10 @@ vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+
+
+local api = require "nvim-tree.api"
+vim.keymap.set('n', '<space>l', api.tree.toggle) 
 
 local set = vim.opt
 -- Use LspAttach autocommand to only map the following keys
@@ -172,11 +185,27 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 
--- set vim options
-vim.o.background = "dark"
+-- nvim-tree
+-- pre-requisites 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+
+-- pass to setup along with your other options
+require("nvim-tree").setup()
+--
+-- general vim options
+--highlight Normal guibg=none
+--highlight NonText guibg=none
+--highlight Normal ctermbg=none
+--highlight NonText ctermbg=none
+
+
+-- transparency for nvim-tree, cuz this thing ugly
+vim.cmd('highlight NvimTreeNormal guibg=transparent')
+
 set.tabstop = 4
 set.shiftwidth = 4
-set.smartcase = true
 set.smarttab = true
 set.softtabstop = 4
 set.cc = "80"
@@ -185,3 +214,4 @@ set.relativenumber = true
 set.clipboard = unnamedplus
 set.swapfile = false
 set.swapfile = false
+set.smartcase = true
