@@ -17,16 +17,16 @@ require("lazy").setup({
 	-- color scheme
 	{
 		-- Theme inspired by Atom
-		'Mofiqul/vscode.nvim',
+		'folke/tokyonight.nvim',
 		priority = 1000,
 		lazy = false,
 		config = function()
-			require('vscode').setup {
+			require('tokyonight').setup {
 				transparent = true,
 				italic_comments = true,
 				underline_links = true,
 			}
-			require('vscode').load()
+			require('tokyonight').load()
 		end,
 	},
 	-- toggle commenting with a shortcut
@@ -53,7 +53,7 @@ require("lazy").setup({
 		opts = {
 			options = {
 				icons_enabled = false,
-				theme = 'vscode',
+				theme = 'tokyonight',
 				component_separators = '|',
 				section_separators = '',
 			},
@@ -99,7 +99,7 @@ lsp_zero.on_attach(function(client, bufnr)
 	local opts = { buffer = bufnr }
 
 
-	vim.keymap.set({ 'n', 'x' }, 'pq', function()
+			vim.keymap.set({ 'n', 'x' }, '<space>q', function()
 		vim.lsp.buf.format({ async = false, timeout_ms = 10000 })
 	end, opts)
 end)
@@ -114,26 +114,35 @@ lsp_zero.set_sign_icons({
 
 -- setup mason
 require("mason").setup({})
+
 require('mason-lspconfig').setup({
 	-- Replace the language servers listed here
 	-- with the ones you want to install
-	ensure_installed = { 'rust_analyzer' },
+	ensure_installed = { 'tsserver', 'rust_analyzer' },
 	handlers = {
 		lsp_zero.default_setup,
 	}
 })
+
+
 local lspconfig = require('lspconfig')
+
+require("lspconfig")['tsserver'].setup({
+   capabilities = capabilities,
+ })
 
 
 lspconfig.rust_analyzer.setup {
-	on_attach = function(client, bufnr)
-		client.server_capabilities.semanticTokensProvider = nil
-		-- I'm guessing for now that treesitter is doing this for me
-		client.server_capabilities.documentFormattingProvider = true
-		client.server_capabilities.documentFormattingRangeProvider = true
-	end,
+	 on_init = function(client, initialization_result)
+    if client.server_capabilities then
+      client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.semanticTokensProvider = false  -- turn off semantic tokens
+    end
+  end,
+
 
 	-- Create a command `:Format` local to the LSP buffer
+	-- o
 }
 
 
@@ -176,7 +185,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 		vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
 		vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
 		vim.keymap.set('n', '<space>f', function()
-			vim.lsp.buf.format { async = true }
+		vim.lsp.buf.format { async = true }
 		end, opts)
 	end,
 })
@@ -196,12 +205,18 @@ require("nvim-tree").setup()
 --highlight NonText guibg=none
 --highlight Normal ctermbg=none
 --highlight NonText ctermbg=none
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 
 -- transparency for nvim-tree, cuz this thing ugly
 vim.cmd('highlight NvimTreeNormal guibg=transparent')
 
 set.tabstop = 4
+set.scrolloff = 10
 set.shiftwidth = 4
 set.smarttab = true
 set.softtabstop = 4
@@ -210,5 +225,17 @@ set.number = true
 set.relativenumber = true
 set.clipboard = unnamedplus
 set.swapfile = false
-set.swapfile = false
+set.undofile = true
 set.smartcase = true
+set.breakindent = true
+vim.signcolumn = 'yes'
+vim.inccommand = 'split'
+vim.cursorline = true
+-- highlight incrementally
+set.incsearch = true
+-- insensitigve search unless \C is used or one more capital letters are
+-- in the search query
+set.ignorecase = true
+vim.opt.smartcase = true
+-- stop highlighting everything after a search
+vim.cmd('set nohlsearch')
