@@ -17,16 +17,16 @@ require("lazy").setup({
 	-- color scheme
 	{
 		-- Theme inspired by Atom
-		'folke/tokyonight.nvim',
+		'Mofiqul/vscode.nvim',
 		priority = 1000,
 		lazy = false,
 		config = function()
-			require('tokyonight').setup {
+			require('vscode').setup {
 				transparent = true,
 				italic_comments = true,
 				underline_links = true,
 			}
-			require('tokyonight').load()
+			require('vscode').load()
 		end,
 	},
 	-- toggle commenting with a shortcut
@@ -53,7 +53,7 @@ require("lazy").setup({
 		opts = {
 			options = {
 				icons_enabled = false,
-				theme = 'tokyonight',
+				theme = 'vsocode',
 				component_separators = '|',
 				section_separators = '',
 			},
@@ -118,7 +118,7 @@ require("mason").setup({})
 require('mason-lspconfig').setup({
 	-- Replace the language servers listed here
 	-- with the ones you want to install
-	ensure_installed = { 'tsserver', 'rust_analyzer' },
+	ensure_installed = { 'rust_analyzer' },
 	handlers = {
 		lsp_zero.default_setup,
 	}
@@ -127,9 +127,10 @@ require('mason-lspconfig').setup({
 
 local lspconfig = require('lspconfig')
 
-require("lspconfig")['tsserver'].setup({
-   capabilities = capabilities,
- })
+-- typescript config
+-- require("lspconfig")['tsserver'].setup({
+--    capabilities = capabilities,
+--  })
 
 
 lspconfig.rust_analyzer.setup {
