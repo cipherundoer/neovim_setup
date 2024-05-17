@@ -1,3 +1,5 @@
+
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -11,22 +13,23 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-
 require("lazy").setup({
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		ft = { "markdown" },
+		build = function() vim.fn["mkdp#util#install"]() end,
+	},
 	"hrsh7th/cmp-nvim-lsp-signature-help",
 	-- color scheme
 	{
 		-- Theme inspired by Atom
-		'Mofiqul/vscode.nvim',
+		'ellisonleao/gruvbox.nvim',
 		priority = 1000,
 		lazy = false,
 		config = function()
-			require('vscode').setup {
-				transparent = true,
-				italic_comments = true,
-				underline_links = true,
-			}
-			require('vscode').load()
+			require('gruvbox').setup {}
+			require('gruvbox').load()
 		end,
 	},
 	-- toggle commenting with a shortcut
@@ -53,7 +56,7 @@ require("lazy").setup({
 		opts = {
 			options = {
 				icons_enabled = false,
-				theme = 'vscode',
+				theme = 'gruvbox',
 				component_separators = '|',
 				section_separators = '',
 			},
@@ -214,7 +217,15 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 
 
 -- transparency for nvim-tree, cuz this thing ugly
-vim.cmd('highlight NvimTreeNormal guibg=transparent')
+-- vim.cmd('highlight Normal ctermbg=none')
+-- vim.cmd('highlight Normal ctermbg=#171717')
+-- vim.opt.background = 'dark'
+vim.cmd('highlight Normal guibg=#171717')
+
+
+
+
+
 
 set.tabstop = 4
 set.scrolloff = 10
@@ -240,3 +251,6 @@ set.ignorecase = true
 vim.opt.smartcase = true
 -- stop highlighting everything after a search
 vim.cmd('set nohlsearch')
+
+
+
