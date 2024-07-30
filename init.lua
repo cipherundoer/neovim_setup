@@ -50,16 +50,17 @@ require("lazy").setup({
 	},
 	"hrsh7th/cmp-nvim-lsp-signature-help",
 	-- color scheme
-	{
-		-- Theme inspired by Atom
-		"ellisonleao/gruvbox.nvim",
-		priority = 1000,
-		lazy = false,
-		config = function()
-			require("gruvbox").setup({})
-			require("gruvbox").load()
-		end,
-	},
+	{ "rose-pine/neovim", name = "rose-pine" },
+	-- {
+	-- 	-- Theme inspired by Atom
+	-- 	"ellisonleao/gruvbox.nvim",
+	-- 	priority = 1000,
+	-- 	lazy = false,
+	-- 	config = function()
+	-- 		require("gruvbox").setup({})
+	-- 		require("gruvbox").load()
+	-- 	end,
+	-- },
 	-- toggle commenting with a shortcut
 	{ "numToStr/Comment.nvim", lazy = false },
 	--  mason to manage lsp servers
@@ -82,7 +83,7 @@ require("lazy").setup({
 		opts = {
 			options = {
 				icons_enabled = false,
-				theme = "gruvbox",
+				theme = "rose-pine",
 				component_separators = "|",
 				section_separators = "",
 			},
@@ -212,21 +213,12 @@ vim.g.loaded_netrwPlugin = 1
 require("nvim-tree").setup()
 --
 -- general vim options
---highlight Normal guibg=none
---highlight NonText guibg=none
---highlight Normal ctermbg=none
---highlight NonText ctermbg=none
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
 vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
 
--- transparency for nvim-tree, cuz this thing ugly
--- vim.cmd('highlight Normal ctermbg=none')
--- vim.cmd('highlight Normal ctermbg=#171717')
--- vim.opt.background = 'dark'
-vim.cmd("highlight Normal guibg=#171717")
 
 set.clipboard = "unnamedplus"
 set.showmode = false
@@ -267,3 +259,7 @@ set.smartcase = true
 -- files
 set.swapfile = false
 set.undofile = true
+
+vim.o.termguicolors = false               
+vim.cmd [[colorscheme rose-pine]]
+set.background=dark
