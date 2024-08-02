@@ -261,5 +261,5 @@ set.swapfile = false
 set.undofile = true
 
 vim.o.termguicolors = false               
-vim.cmd [[colorscheme rose-pine]]
+vim.cmd [[colorscheme torte]]
 set.background=dark
