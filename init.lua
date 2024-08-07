@@ -12,6 +12,12 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+	{
+	  "navarasu/onedark.nvim",
+	  lazy = false,
+	  priority = 1000,
+	  opts = {},
+	},
 	{ -- Autoformat
 		"stevearc/conform.nvim",
 		lazy = false,
@@ -136,7 +142,7 @@ require("mason").setup({})
 require("mason-lspconfig").setup({
 	-- Replace the language servers listed here
 	-- with the ones you want to install
-	ensure_installed = { "rust_analyzer" },
+	ensure_installed = { "rust_analyzer", "html" },
 	handlers = {
 		lsp_zero.default_setup,
 	},
@@ -236,7 +242,6 @@ set.incsearch = true
 vim.hlsearch = true
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
-vim.opt.cursorline = true
 vim.opt.signcolumn = "yes"
 
 -- indentation
@@ -261,5 +266,5 @@ set.swapfile = false
 set.undofile = true
 
 vim.o.termguicolors = false               
-vim.cmd [[colorscheme torte]]
+vim.cmd [[colorscheme onedark]]
 set.background=dark
